@@ -1,4 +1,5 @@
 <template>
+    <Head title="Tasbih Counter" />
     <Layout>
         <div class="max-w-6xl mx-auto">
             <h1
@@ -89,7 +90,8 @@
 </template>
 
 <script setup>
+import { Head, Link } from "@inertiajs/vue3";
 import Layout from "@/Components/Layout.vue";
 import Counter from "@/Components/Counter.vue";
-import { Link } from "@inertiajs/vue3";
+import { ref, onMounted, watch } from "vue";
 </script>

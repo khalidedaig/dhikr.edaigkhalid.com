@@ -1,4 +1,5 @@
 <template>
+    <Head title="Dhikr Collection" />
     <Layout>
         <div class="max-w-6xl mx-auto">
             <h1
@@ -177,8 +178,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { Head, Link } from "@inertiajs/vue3";
 import Layout from "@/Components/Layout.vue";
-import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     dhikrList: {

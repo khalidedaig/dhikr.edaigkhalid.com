@@ -1,4 +1,5 @@
 <template>
+    <Head title="Home" />
     <Layout>
         <div class="text-center">
             <!-- Arabic Blessing -->
@@ -96,6 +97,6 @@
 </template>
 
 <script setup>
-import Layout from "@/Components/Layout.vue";
-import { Link } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
+import Layout from "../Components/Layout.vue";
 </script>
