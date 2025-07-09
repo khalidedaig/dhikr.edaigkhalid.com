@@ -1,3 +1,7 @@
+---
+applyTo: "**"
+---
+
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
 # Digital Dhikr Application - Copilot Instructions
@@ -12,12 +16,13 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   **Styling**: Tailwind CSS 4
 -   **Build Tool**: Vite
 -   **Storage**: LocalStorage for persistence
+-   **Icons**: Lucide Vue Next (lucide-vue-next) for modern, lightweight SVG icons
 
 ## Project Structure
 
 -   `app/Http/Controllers/DhikrController.php` - Main controller for Dhikr routes
--   `resources/js/Pages/` - Vue 3 pages (Home, Tasbih, DhikrList)
--   `resources/js/Components/` - Reusable Vue components (Layout, Counter)
+-   `resources/js/Pages/` - Vue 3 pages (Home, Tasbih, DhikrList, Auth pages)
+-   `resources/js/Components/` - Reusable Vue components (Layout, Counter, PasswordInput)
 -   `routes/web.php` - Application routes
 -   `resources/css/app.css` - Tailwind CSS 4 styles
 
@@ -35,6 +40,9 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   Adaptive goal recommendations based on usage patterns
 -   Context-aware dhikr recommendations (time of day, frequency)
 -   Personal dhikr history and analytics
+-   **Password toggle functionality** with show/hide password feature
+-   **Authentication system** with modern UI/UX
+-   **Reusable components** for consistent design patterns
 
 ## Code Style Guidelines
 
@@ -45,6 +53,9 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   Use semantic HTML and accessibility features
 -   Store counter state in LocalStorage
 -   Include Arabic text with proper RTL direction
+-   **Use Lucide icons** for consistent, modern iconography
+-   **Create reusable components** for common UI patterns
+-   **Ensure accessibility** with proper ARIA labels and keyboard navigation
 
 ## Arabic Text Handling
 
@@ -52,6 +63,22 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   Apply RTL direction for Arabic text
 -   Include Google Fonts (Amiri, Scheherazade New) for Arabic typography
 -   Use `.arabic-text` CSS class for styling
+
+## Icon System
+
+-   **Primary Library**: Lucide Vue Next (lucide-vue-next)
+-   **Tree-shakable imports**: Only import icons you actually use
+-   **Consistent sizing**: Use appropriate size props (e.g., :size="20")
+-   **Color theming**: Apply hover states with emerald color theme
+-   **Accessibility**: Include proper ARIA labels for icon buttons
+
+## Authentication Features
+
+-   **PasswordInput Component**: Reusable password field with show/hide toggle
+-   **Modern UI**: Clean design without intrusive outlines
+-   **Accessibility**: Full keyboard navigation and screen reader support
+-   **Error handling**: Integrated with Laravel form validation
+-   **Responsive design**: Mobile-optimized authentication forms
 
 ## Responsive Design
 
@@ -76,3 +103,17 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   Track completion rates, preferred times, and goal achievement patterns
 -   Use aggregated data to provide personalized insights
 -   Implement learning algorithms for better user experience
+
+## Component Library
+
+-   **PasswordInput**: Reusable password field with toggle functionality
+-   **Counter**: Digital dhikr counter with goal tracking
+-   **Layout**: Main application layout with navigation
+-   **LearningInsights**: AI-powered usage analytics and recommendations
+
+## Dependencies
+
+-   **Core**: Laravel 12, Vue 3, Inertia.js, Tailwind CSS 4
+-   **Icons**: lucide-vue-next for modern SVG icons
+-   **Build**: Vite for fast development and optimized builds
+-   **Fonts**: Google Fonts (Amiri, Scheherazade New) for Arabic typography

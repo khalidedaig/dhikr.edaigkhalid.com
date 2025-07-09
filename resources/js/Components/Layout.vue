@@ -88,6 +88,90 @@
                                 ></path>
                             </svg>
                         </button>
+
+                        <!-- Authentication -->
+                        <div
+                            v-if="$page.props.auth.user"
+                            class="flex items-center space-x-4"
+                        >
+                            <!-- User Menu -->
+                            <div class="relative group">
+                                <button
+                                    class="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                                >
+                                    <div
+                                        class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center"
+                                    >
+                                        <span
+                                            class="text-white text-sm font-medium"
+                                        >
+                                            {{
+                                                $page.props.auth.user.name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                        </span>
+                                    </div>
+                                    <span>{{
+                                        $page.props.auth.user.name
+                                    }}</span>
+                                    <svg
+                                        class="w-4 h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        ></path>
+                                    </svg>
+                                </button>
+
+                                <!-- Dropdown Menu -->
+                                <div
+                                    class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+                                >
+                                    <div class="py-1">
+                                        <div
+                                            class="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700"
+                                        >
+                                            {{ $page.props.auth.user.email }}
+                                        </div>
+                                        <Link
+                                            :href="route('password.edit')"
+                                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            Change Password
+                                        </Link>
+                                        <Link
+                                            :href="route('logout')"
+                                            method="post"
+                                            as="button"
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        >
+                                            Sign Out
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else class="flex items-center space-x-4">
+                            <Link
+                                :href="route('login')"
+                                class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                            >
+                                Sign In
+                            </Link>
+                            <Link
+                                :href="route('register')"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                            >
+                                Sign Up
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -51,3 +51,12 @@
 .pulse {
   animation: pulse 1s ease-in-out 3 alternate;
 }
+
+/* Password toggle button styles */
+.password-toggle {
+  @apply transition-colors duration-200;
+}
+
+.password-toggle:hover {
+  @apply text-emerald-600;
+}
