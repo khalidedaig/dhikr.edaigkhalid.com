@@ -23,6 +23,14 @@
                 (SWT) throughout your day.
             </p>
 
+            <!-- Learning Insights -->
+            <LearningInsights
+                :dhikr-list="dhikrList"
+                @apply-goal="handleGoalSuggestion"
+                @apply-recommendation="handleRecommendation"
+                ref="learningInsightsRef"
+            />
+
             <!-- Additional Info -->
             <div class="mb-8 bg-blue-50 dark:bg-blue-900 rounded-lg p-6">
                 <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-3">
@@ -52,6 +60,7 @@
                 <div
                     v-for="dhikr in dhikrList"
                     :key="dhikr.id"
+                    :data-dhikr-id="dhikr.id"
                     class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
                 >
                     <div class="px-2 py-6">
@@ -180,6 +189,8 @@
 import { ref, computed, onMounted } from "vue";
 import { Head, Link } from "@inertiajs/vue3";
 import Layout from "@/Components/Layout.vue";
+import LearningInsights from "@/Components/LearningInsights.vue";
+import { learningService } from "@/Services/LearningService.js";
 
 const props = defineProps({
     dhikrList: {
@@ -189,6 +200,8 @@ const props = defineProps({
 });
 
 const dhikrCounters = ref({});
+const learningInsightsRef = ref(null);
+const sessionStartTimes = ref({});
 
 onMounted(() => {
     loadAllDhikrData();
@@ -257,8 +270,21 @@ function incrementDhikr(dhikrId) {
             dhikrCounters.value[dhikrId] = { count: 0, goal: 33 };
         }
 
+        // Start session tracking if first count
+        if (dhikrCounters.value[dhikrId].count === 0) {
+            sessionStartTimes.value[dhikrId] = Date.now();
+        }
+
         dhikrCounters.value[dhikrId].count++;
         saveDhikrData(dhikrId);
+
+        // Record learning interaction
+        learningService.recordInteraction("increment", dhikrId);
+
+        // Check if goal reached
+        if (dhikrCounters.value[dhikrId].count >= goal && goal > 0) {
+            recordDhikrSession(dhikrId, true);
+        }
 
         // Vibration feedback
         if ("vibrate" in navigator) {
@@ -267,6 +293,11 @@ function incrementDhikr(dhikrId) {
 
         // Audio feedback
         playSound();
+
+        // Refresh learning insights
+        if (learningInsightsRef.value) {
+            learningInsightsRef.value.refreshInsights();
+        }
     }
 }
 
@@ -275,18 +306,37 @@ function resetDhikr(dhikrId) {
         dhikrCounters.value[dhikrId] = { count: 0, goal: 33 };
     }
 
+    // Record session before reset if there was progress
+    if (dhikrCounters.value[dhikrId].count > 0) {
+        recordDhikrSession(dhikrId, false);
+    }
+
     dhikrCounters.value[dhikrId].count = 0;
+
+    // Reset session start time
+    sessionStartTimes.value[dhikrId] = Date.now();
+
+    // Record learning interaction
+    learningService.recordInteraction("reset", dhikrId);
+
     saveDhikrData(dhikrId);
 }
 
 function updateDhikrGoal(dhikrId, newGoal) {
     const goal = parseInt(newGoal) || 1;
+    const oldGoal = getDhikrGoal(dhikrId);
 
     if (!dhikrCounters.value[dhikrId]) {
         dhikrCounters.value[dhikrId] = { count: 0, goal: goal };
     } else {
         dhikrCounters.value[dhikrId].goal = goal;
     }
+
+    // Record learning interaction for goal change
+    learningService.recordInteraction("goal_change", dhikrId, {
+        newGoal: goal,
+        oldGoal: oldGoal,
+    });
 
     saveDhikrData(dhikrId);
 }
@@ -312,6 +362,51 @@ function playSound() {
         oscillator.stop(audioContext.currentTime + 0.1);
     } catch (e) {
         // Audio not supported
+    }
+}
+
+// Learning service integration methods
+function recordDhikrSession(dhikrId, completed) {
+    const startTime = sessionStartTimes.value[dhikrId] || Date.now();
+    const count = getDhikrCount(dhikrId);
+    const goal = getDhikrGoal(dhikrId);
+
+    learningService.recordSession(dhikrId, count, goal, startTime, Date.now());
+
+    // Reset session start time for next session
+    sessionStartTimes.value[dhikrId] = Date.now();
+}
+
+function handleGoalSuggestion(suggestedGoal) {
+    // This would be called when user wants to apply a goal suggestion
+    // Implementation depends on which dhikr the suggestion is for
+    console.log("Goal suggestion:", suggestedGoal);
+}
+
+function handleRecommendation(recommendation) {
+    // Handle dhikr recommendation from learning insights
+    if (recommendation.dhikrId) {
+        // Record that user selected this recommendation
+        learningService.recordInteraction(
+            "dhikr_select",
+            recommendation.dhikrId,
+            {
+                source: "recommendation",
+                confidence: recommendation.confidence,
+            }
+        );
+
+        // Optionally scroll to or highlight the recommended dhikr
+        const dhikrElement = document.querySelector(
+            `[data-dhikr-id="${recommendation.dhikrId}"]`
+        );
+        if (dhikrElement) {
+            dhikrElement.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+            dhikrElement.style.animation = "pulse 1s ease-in-out 3 alternate";
+        }
     }
 }
 </script>

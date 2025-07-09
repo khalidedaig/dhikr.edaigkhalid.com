@@ -8,6 +8,15 @@
                 Tasbih Counter
             </h1>
 
+            <!-- Learning Insights -->
+            <LearningInsights
+                current-dhikr-id="general-tasbih"
+                :dhikr-list="[]"
+                @apply-goal="handleGoalSuggestion"
+                @apply-recommendation="handleRecommendation"
+                ref="learningInsightsRef"
+            />
+
             <!-- Grid Layout for Three Sections -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Quick Dhikr Suggestions -->
@@ -93,5 +102,20 @@
 import { Head, Link } from "@inertiajs/vue3";
 import Layout from "@/Components/Layout.vue";
 import Counter from "@/Components/Counter.vue";
+import LearningInsights from "@/Components/LearningInsights.vue";
 import { ref, onMounted, watch } from "vue";
+
+const learningInsightsRef = ref(null);
+
+function handleGoalSuggestion(suggestedGoal) {
+    // Apply goal suggestion to the main counter
+    console.log("Applying goal suggestion:", suggestedGoal);
+    // This could be implemented to automatically update the Counter component's goal
+}
+
+function handleRecommendation(recommendation) {
+    // Handle general dhikr recommendations
+    console.log("Received recommendation:", recommendation);
+    // Could suggest specific dhikr from the collection or time-based recommendations
+}
 </script>

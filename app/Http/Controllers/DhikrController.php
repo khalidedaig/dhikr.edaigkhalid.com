@@ -61,4 +61,9 @@ class DhikrController extends Controller
             'dhikrList' => $defaultDhikr
         ]);
     }
+
+    public function analytics()
+    {
+        return Inertia::render('Analytics');
+    }
 }

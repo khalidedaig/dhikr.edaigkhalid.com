@@ -31,6 +31,10 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   Arabic text support with proper fonts
 -   Vibration and audio feedback
 -   Pre-defined dhikr collection
+-   Auto-learning from conversation for personalized dhikr suggestions
+-   Adaptive goal recommendations based on usage patterns
+-   Context-aware dhikr recommendations (time of day, frequency)
+-   Personal dhikr history and analytics
 
 ## Code Style Guidelines
 
@@ -55,3 +59,20 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 -   Ensure touch-friendly buttons (min 44px)
 -   Optimize for portrait and landscape orientations
 -   Support dark mode preferences
+
+## Auto-Learning Features
+
+-   **Usage Pattern Analysis**: Track user dhikr patterns and frequency
+-   **Smart Goal Suggestions**: Recommend goals based on historical completion rates
+-   **Time-based Recommendations**: Suggest dhikr based on time of day and Islamic prayer times
+-   **Progress Analytics**: Provide insights into spiritual practice consistency
+-   **Adaptive Interface**: Personalize UI based on most-used dhikr
+-   **Conversation Learning**: Learn from user interactions to improve recommendations
+-   **Habit Formation**: Encourage consistent practice through gentle reminders
+
+## Data Structure for Learning
+
+-   Store usage analytics in LocalStorage with privacy-first approach
+-   Track completion rates, preferred times, and goal achievement patterns
+-   Use aggregated data to provide personalized insights
+-   Implement learning algorithms for better user experience

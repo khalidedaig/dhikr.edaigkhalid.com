@@ -94,6 +94,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
+import { learningService } from "@/Services/LearningService.js";
 
 const props = defineProps({
     dhikr: {
@@ -113,6 +114,7 @@ const props = defineProps({
 const localCount = ref(0);
 const localGoal = ref(props.defaultGoal);
 const goal = computed(() => localGoal.value);
+const sessionStartTime = ref(null);
 
 const progressPercentage = computed(() => {
     if (goal.value <= 0) return 0;
@@ -126,6 +128,10 @@ const goalReached = computed(() => {
 // Load from localStorage on mount
 onMounted(() => {
     loadFromStorage();
+    startSession();
+
+    // Apply learning-based goal suggestion
+    applyGoalSuggestion();
 });
 
 // Watch for changes and save to localStorage
@@ -136,6 +142,13 @@ watch(
     },
     { deep: true }
 );
+
+// Watch for goal changes and record learning data
+watch(localGoal, (newGoal, oldGoal) => {
+    if (oldGoal !== undefined && newGoal !== oldGoal) {
+        recordGoalChange(newGoal, oldGoal);
+    }
+});
 
 function loadFromStorage() {
     const stored = localStorage.getItem(props.storageKey);
@@ -162,6 +175,9 @@ function increment() {
     if (goal.value <= 0 || localCount.value < goal.value) {
         localCount.value++;
 
+        // Record learning interaction
+        recordInteraction("increment");
+
         // Vibration feedback (if supported)
         if ("vibrate" in navigator) {
             navigator.vibrate(50);
@@ -169,16 +185,81 @@ function increment() {
 
         // Audio feedback (optional)
         playSound();
+
+        // Check if goal is reached and record session
+        if (localCount.value >= goal.value && goal.value > 0) {
+            recordSessionCompletion();
+        }
     }
 }
 
 function reset() {
+    // Record session before reset if there was progress
+    if (localCount.value > 0) {
+        recordSession();
+    }
+
     localCount.value = 0;
+
+    // Record learning interaction
+    recordInteraction("reset");
+
+    // Start new session
+    startSession();
 }
 
 function updateGoal() {
     if (localGoal.value < 1) {
         localGoal.value = 1;
+    }
+}
+
+// Learning service integration methods
+function startSession() {
+    sessionStartTime.value = Date.now();
+}
+
+function recordSession() {
+    if (sessionStartTime.value && props.dhikr) {
+        learningService.recordSession(
+            props.dhikr.id,
+            localCount.value,
+            goal.value,
+            sessionStartTime.value,
+            Date.now()
+        );
+    }
+}
+
+function recordSessionCompletion() {
+    recordSession();
+    // Start new session for potential continued practice
+    startSession();
+}
+
+function recordInteraction(type, data = {}) {
+    const dhikrId = props.dhikr ? props.dhikr.id : null;
+    learningService.recordInteraction(type, dhikrId, data);
+}
+
+function recordGoalChange(newGoal, oldGoal) {
+    recordInteraction("goal_change", {
+        newGoal,
+        oldGoal,
+        dhikrId: props.dhikr ? props.dhikr.id : null,
+    });
+}
+
+function applyGoalSuggestion() {
+    if (props.dhikr) {
+        const suggestion = learningService.getSuggestedGoal(props.dhikr.id);
+        if (suggestion && suggestion.goal !== localGoal.value) {
+            // Only apply if user hasn't manually set a different goal recently
+            const storedData = localStorage.getItem(props.storageKey);
+            if (!storedData) {
+                localGoal.value = suggestion.goal;
+            }
+        }
     }
 }
 

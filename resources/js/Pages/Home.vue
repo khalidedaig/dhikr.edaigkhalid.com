@@ -43,10 +43,17 @@
                     </Link>
 
                     <Link
-                        href="/dhikr"
+                        href="/dhikr-list"
                         class="bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
                     >
                         Browse Dhikr
+                    </Link>
+
+                    <Link
+                        href="/analytics"
+                        class="bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800"
+                    >
+                        📊 Analytics
                     </Link>
                 </div>
             </div>
@@ -67,6 +74,19 @@
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <div class="text-3xl mb-4">🤖</div>
+                    <h3
+                        class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
+                    >
+                        Smart Learning
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Learns from your habits to provide personalized insights
+                        and goal recommendations.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <div class="text-3xl mb-4">💾</div>
                     <h3
                         class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
@@ -76,6 +96,19 @@
                     <p class="text-gray-600 dark:text-gray-300">
                         Your progress is automatically saved in your browser.
                         Never lose your count.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <div class="text-3xl mb-4">📊</div>
+                    <h3
+                        class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
+                    >
+                        Analytics
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Track your spiritual practice with detailed analytics
+                        and progress insights.
                     </p>
                 </div>
 
