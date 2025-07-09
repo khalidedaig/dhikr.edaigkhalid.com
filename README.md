@@ -1,6 +1,6 @@
-# Digital Tasbih (ذِكر) Web Application
+# Digital Dhikr (ذِكر) Web Application
 
-A modern digital Tasbih application built with Laravel, Inertia.js, Vue 3, and Tailwind CSS 4. This application provides an elegant way to count dhikr (Islamic remembrance) with persistent storage and customizable goals.
+A modern digital Dhikr application built with Laravel, Inertia.js, Vue 3, and Tailwind CSS 4. This application provides an elegant way to count dhikr (Islamic remembrance) with persistent storage and customizable goals.
 
 ## 🎯 Features
 
@@ -44,7 +44,7 @@ A modern digital Tasbih application built with Laravel, Inertia.js, Vue 3, and T
 
 ```
 /
-├── app/Http/Controllers/TasbihController.php  # Main controller
+├── app/Http/Controllers/DhikrController.php   # Main controller
 ├── resources/
 │   ├── js/
 │   │   ├── Pages/
@@ -94,11 +94,11 @@ npm run build
 
 ## 📱 Pages and Routes
 
-| Route     | Page      | Description                    |
-| --------- | --------- | ------------------------------ |
-| `/`       | Home      | Welcome page with navigation   |
-| `/tasbih` | Tasbih    | Main counter with goal setting |
-| `/dhikr`  | DhikrList | Collection of predefined dhikr |
+| Route          | Page      | Description                    |
+| -------------- | --------- | ------------------------------ |
+| `/`            | Home      | Welcome page with navigation   |
+| `/dhikr`       | Tasbih    | Main counter with goal setting |
+| `/dhikr-list`  | DhikrList | Collection of predefined dhikr |
 
 ## 🎨 Styling and Themes
 
@@ -115,8 +115,8 @@ Counter states are stored in browser LocalStorage with the following structure:
 
 ```javascript
 {
-  "tasbih_count": 25,
-  "tasbih_goal": 33,
+  "dhikr_count": 25,
+  "dhikr_goal": 33,
   "dhikr_counters": {
     "1": { "count": 15, "goal": 33 },
     "2": { "count": 33, "goal": 33 }

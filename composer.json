@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "digital/dhikr",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Digital Dhikr - A modern Islamic remembrance counter application built with Laravel, Inertia.js, and Vue 3.",
+    "keywords": ["laravel", "dhikr", "tasbih", "islamic", "counter", "vue", "inertia"],
     "license": "MIT",
     "require": {
         "php": "^8.2",

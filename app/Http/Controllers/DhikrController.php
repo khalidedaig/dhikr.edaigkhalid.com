@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class TasbihController extends Controller
+class DhikrController extends Controller
 {
     public function index()
     {

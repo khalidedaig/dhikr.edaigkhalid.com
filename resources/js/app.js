@@ -5,7 +5,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import "../css/app.css";
 
 createInertiaApp({
-    title: (title) => `${title} - Digital Tasbih`,
+    title: (title) => `${title} - Digital Dhikr`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,

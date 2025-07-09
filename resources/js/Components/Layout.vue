@@ -11,7 +11,7 @@
                             <div class="text-2xl">📿</div>
                             <span
                                 class="text-xl font-bold text-gray-900 dark:text-white"
-                                >Digital Tasbih</span
+                                >Digital Dhikr</span
                             >
                         </Link>
                     </div>
@@ -19,22 +19,22 @@
                     <div class="flex items-center space-x-4">
                         <!-- Navigation Links -->
                         <Link
-                            href="/tasbih"
-                            class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                            :class="
-                                isCurrentRoute('tasbih')
-                                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
-                                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
-                            "
-                        >
-                            Tasbih
-                        </Link>
-
-                        <Link
                             href="/dhikr"
                             class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
                             :class="
                                 isCurrentRoute('dhikr')
+                                    ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                            "
+                        >
+                            Dhikr
+                        </Link>
+
+                        <Link
+                            href="/dhikr-list"
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                            :class="
+                                isCurrentRoute('dhikr-list')
                                     ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
                                     : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                             "

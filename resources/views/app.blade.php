@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title inertia>{{ config('app.name', 'Digital Tasbih') }}</title>
+    <title inertia>{{ config('app.name', 'Digital Dhikr') }}</title>
 
     <!-- Google Fonts for Arabic text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

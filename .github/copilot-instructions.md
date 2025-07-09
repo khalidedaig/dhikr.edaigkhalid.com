@@ -1,8 +1,8 @@
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
-# Digital Tasbih Application - Copilot Instructions
+# Digital Dhikr Application - Copilot Instructions
 
-This is a Laravel application with Inertia.js and Vue 3 for creating a digital Tasbih (Islamic prayer counter) web application.
+This is a Laravel application with Inertia.js and Vue 3 for creating a digital Dhikr (Islamic prayer counter) web application.
 
 ## Tech Stack
 
@@ -15,7 +15,7 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital T
 
 ## Project Structure
 
--   `app/Http/Controllers/TasbihController.php` - Main controller for Tasbih routes
+-   `app/Http/Controllers/DhikrController.php` - Main controller for Dhikr routes
 -   `resources/js/Pages/` - Vue 3 pages (Home, Tasbih, DhikrList)
 -   `resources/js/Components/` - Reusable Vue components (Layout, Counter)
 -   `routes/web.php` - Application routes
