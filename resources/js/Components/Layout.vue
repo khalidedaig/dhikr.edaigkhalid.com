@@ -11,7 +11,7 @@
                             <div class="text-2xl">📿</div>
                             <span
                                 class="text-xl font-bold text-gray-900 dark:text-white"
-                                >Digital Dhikr</span
+                                >Dhikr</span
                             >
                         </Link>
                     </div>
@@ -45,7 +45,7 @@
                         <!-- Dark Mode Toggle -->
                         <button
                             @click="toggleDarkMode"
-                            class="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            class="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                         >
                             <svg
                                 v-if="!isDark"

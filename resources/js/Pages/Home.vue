@@ -1,6 +1,20 @@
 <template>
     <Layout>
         <div class="text-center">
+            <!-- Arabic Blessing -->
+            <div
+                class="mb-8 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900 dark:to-blue-900 rounded-lg p-6"
+            >
+                <p
+                    class="arabic-text text-2xl font-bold text-green-700 dark:text-green-300 mb-2"
+                >
+                    بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+                </p>
+                <p class="text-gray-600 dark:text-gray-300">
+                    In the name of Allah, the Most Gracious, the Most Merciful
+                </p>
+            </div>
+
             <!-- Hero Section -->
             <div
                 class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8"
@@ -9,7 +23,7 @@
                 <h1
                     class="text-4xl font-bold text-gray-900 dark:text-white mb-4"
                 >
-                    Digital Tasbih
+                    Dhikr
                 </h1>
                 <p
                     class="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto"
@@ -76,20 +90,6 @@
                         automatic dark mode.
                     </p>
                 </div>
-            </div>
-
-            <!-- Arabic Blessing -->
-            <div
-                class="mt-8 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900 dark:to-blue-900 rounded-lg p-6"
-            >
-                <p
-                    class="arabic-text text-2xl font-bold text-green-700 dark:text-green-300 mb-2"
-                >
-                    بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                </p>
-                <p class="text-gray-600 dark:text-gray-300">
-                    In the name of Allah, the Most Gracious, the Most Merciful
-                </p>
             </div>
         </div>
     </Layout>

@@ -94,11 +94,11 @@ npm run build
 
 ## 📱 Pages and Routes
 
-| Route          | Page      | Description                    |
-| -------------- | --------- | ------------------------------ |
-| `/`            | Home      | Welcome page with navigation   |
-| `/dhikr`       | Tasbih    | Main counter with goal setting |
-| `/dhikr-list`  | DhikrList | Collection of predefined dhikr |
+| Route         | Page      | Description                    |
+| ------------- | --------- | ------------------------------ |
+| `/`           | Home      | Welcome page with navigation   |
+| `/dhikr`      | Tasbih    | Main counter with goal setting |
+| `/dhikr-list` | DhikrList | Collection of predefined dhikr |
 
 ## 🎨 Styling and Themes
 

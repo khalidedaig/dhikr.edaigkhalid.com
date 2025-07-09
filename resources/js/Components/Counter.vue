@@ -64,7 +64,7 @@
             <!-- Increment Button -->
             <button
                 @click="increment"
-                class="counter-animation bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
+                class="counter-animation bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800 cursor-pointer"
                 :disabled="goal > 0 && localCount >= goal"
             >
                 <span class="text-2xl">+</span>
@@ -74,7 +74,7 @@
             <!-- Reset Button -->
             <button
                 @click="reset"
-                class="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800"
+                class="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800 cursor-pointer"
             >
                 Reset
             </button>
