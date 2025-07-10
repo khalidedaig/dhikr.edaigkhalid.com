@@ -14,5 +14,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/analytics', [DhikrController::class, 'analytics'])->name('analytics');
 });
 
-// Include authentication routes
 require __DIR__ . '/auth.php';

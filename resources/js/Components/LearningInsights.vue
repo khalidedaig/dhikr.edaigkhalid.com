@@ -1,313 +1,140 @@
 <template>
     <div
-        class="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900 dark:to-blue-900 rounded-lg p-6 mb-6"
+        v-if="hasEnoughData"
+        class="shimport { learningService, type PersonalizedInsights, type GoalSuggestion } from '@/Services/LearningService'; import { onMounted, ref } from 'vue';ow-lg mb-8 rounded-lg bg-white p-6 dark:bg-gray-800"
     >
-        <div class="flex items-center justify-between mb-4">
-            <h3
-                class="text-lg font-semibold text-purple-800 dark:text-purple-200"
-            >
-                🤖 Personal Insights
-            </h3>
-            <button
-                @click="refreshInsights"
-                class="text-sm text-purple-600 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-100"
-            >
-                🔄 Refresh
-            </button>
+        <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">🧠 Learning Insights</h2>
+
+        <!-- Consistency Score -->
+        <div v-if="insights.consistency !== undefined" class="mb-4 rounded-lg bg-blue-50 p-4 dark:bg-blue-900">
+            <h4 class="mb-2 font-medium text-blue-800 dark:text-blue-200">📈 Consistency Score</h4>
+            <div class="flex items-center">
+                <div class="mr-3 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ insights.consistency }}%</div>
+                <div class="text-sm text-blue-700 dark:text-blue-300">of the last 7 days</div>
+            </div>
         </div>
 
-        <div v-if="!hasEnoughData" class="text-center py-4">
-            <p class="text-purple-600 dark:text-purple-300 text-sm">
-                Keep practicing to unlock personalized insights! Complete a few
-                more dhikr sessions to see recommendations.
+        <!-- Best Time -->
+        <div v-if="insights.bestTime && insights.bestTime !== 'Not enough data'" class="mb-4 rounded-lg bg-green-50 p-4 dark:bg-green-900">
+            <h4 class="mb-2 font-medium text-green-800 dark:text-green-200">⏰ Best Performance Time</h4>
+            <p class="text-sm text-green-700 dark:text-green-300">
+                You complete dhikr most successfully during
+                <span class="font-medium text-green-600 dark:text-green-400">{{ insights.bestTime }}</span>
             </p>
         </div>
 
-        <div v-else class="space-y-4">
-            <!-- Consistency Score -->
-            <div
-                v-if="insights.consistency !== undefined"
-                class="bg-white dark:bg-gray-800 rounded-lg p-4"
-            >
-                <div class="flex items-center justify-between mb-2">
-                    <span
-                        class="text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >
-                        Consistency Score
-                    </span>
-                    <span class="text-lg font-bold" :class="consistencyColor">
-                        {{ insights.consistency }}%
-                    </span>
-                </div>
-                <div
-                    class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2"
-                >
-                    <div
-                        class="h-2 rounded-full transition-all duration-500"
-                        :class="consistencyBarColor"
-                        :style="{ width: insights.consistency + '%' }"
-                    ></div>
+        <!-- Favorite Dhikr -->
+        <div v-if="insights.favoritesDhikr && insights.favoritesDhikr.length > 0" class="mb-4 rounded-lg bg-purple-50 p-4 dark:bg-purple-900">
+            <h4 class="mb-3 font-medium text-purple-800 dark:text-purple-200">💝 Most Practiced</h4>
+            <div class="space-y-2">
+                <div v-for="fav in insights.favoritesDhikr.slice(0, 3)" :key="fav.dhikrId" class="flex items-center justify-between">
+                    <span class="text-sm text-purple-600 dark:text-purple-400">{{ getDhikrName(fav.dhikrId) }}</span>
+                    <span class="text-xs font-medium text-purple-500 dark:text-purple-300">{{ fav.count }} sessions</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Current Recommendation -->
-            <div
-                v-if="currentRecommendation"
-                class="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-green-500"
-            >
-                <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">
-                    💡 Smart Suggestion
-                </h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                    {{ currentRecommendation.reason }}
-                </p>
-                <button
-                    @click="applyRecommendation(currentRecommendation)"
-                    class="text-sm bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors"
-                >
-                    Apply Suggestion
-                </button>
-            </div>
-
-            <!-- Goal Optimization -->
-            <div
-                v-if="goalSuggestion"
-                class="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-blue-500"
-            >
-                <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">
-                    🎯 Goal Optimization
-                </h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                    {{ goalSuggestion.reason }}
-                </p>
-                <div class="flex items-center space-x-2">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">
-                        Suggested goal:
-                    </span>
-                    <span class="font-bold text-blue-600 dark:text-blue-400">
-                        {{ goalSuggestion.goal }}
-                    </span>
-                    <button
-                        @click="$emit('apply-goal', goalSuggestion.goal)"
-                        class="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition-colors"
-                    >
-                        Apply
-                    </button>
+        <!-- Streak Info -->
+        <div v-if="insights.streakInfo" class="mb-4 rounded-lg bg-orange-50 p-4 dark:bg-orange-900">
+            <h4 class="mb-2 font-medium text-orange-800 dark:text-orange-200">🔥 Streak Information</h4>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="text-center">
+                    <div class="text-lg font-bold text-orange-600 dark:text-orange-400">{{ insights.streakInfo.current }}</div>
+                    <div class="text-xs text-orange-700 dark:text-orange-300">Current Streak</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-orange-600 dark:text-orange-400">{{ insights.streakInfo.longest }}</div>
+                    <div class="text-xs text-orange-700 dark:text-orange-300">Longest Streak</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Streak Information -->
-            <div
-                v-if="insights.streakInfo"
-                class="bg-white dark:bg-gray-800 rounded-lg p-4"
-            >
-                <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-3">
-                    🔥 Practice Streak
-                </h4>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="text-center">
-                        <div
-                            class="text-2xl font-bold text-orange-500 dark:text-orange-400"
-                        >
-                            {{ insights.streakInfo.current }}
-                        </div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400">
-                            Current Streak
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-2xl font-bold text-red-500 dark:text-red-400"
-                        >
-                            {{ insights.streakInfo.longest }}
-                        </div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400">
-                            Best Streak
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Improvements -->
+        <div v-if="insights.improvement && insights.improvement.length > 0" class="mb-4 rounded-lg bg-yellow-50 p-4 dark:bg-yellow-900">
+            <h4 class="mb-3 font-medium text-yellow-800 dark:text-yellow-200">💡 Suggestions</h4>
+            <ul class="space-y-1">
+                <li v-for="suggestion in insights.improvement" :key="suggestion" class="text-sm text-yellow-700 dark:text-yellow-300">
+                    • {{ suggestion }}
+                </li>
+            </ul>
+        </div>
 
-            <!-- Best Performance Time -->
-            <div
-                v-if="insights.bestTime"
-                class="bg-white dark:bg-gray-800 rounded-lg p-4"
-            >
-                <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">
-                    ⏰ Best Performance Time
-                </h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    You complete dhikr most successfully during
-                    <span
-                        class="font-medium text-indigo-600 dark:text-indigo-400"
-                    >
-                        {{ insights.bestTime }}
-                    </span>
-                </p>
-            </div>
-
-            <!-- Favorite Dhikr -->
-            <div
-                v-if="
-                    insights.favoritesDhikr &&
-                    insights.favoritesDhikr.length > 0
-                "
-                class="bg-white dark:bg-gray-800 rounded-lg p-4"
-            >
-                <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-3">
-                    💝 Most Practiced
-                </h4>
-                <div class="space-y-2">
-                    <div
-                        v-for="(fav, index) in insights.favoritesDhikr.slice(
-                            0,
-                            3
-                        )"
-                        :key="fav.dhikrId"
-                        class="flex items-center justify-between"
-                    >
-                        <span class="text-sm text-gray-600 dark:text-gray-400">
-                            {{ getDhikrName(fav.dhikrId) }}
-                        </span>
-                        <div class="flex items-center space-x-1">
-                            <span
-                                class="text-xs text-gray-500 dark:text-gray-400"
-                            >
-                                {{ fav.count }} times
-                            </span>
-                            <span v-if="index === 0" class="text-yellow-500">
-                                👑
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Privacy Controls -->
-            <div class="text-center pt-2">
-                <button
-                    @click="showPrivacyOptions = !showPrivacyOptions"
-                    class="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-                >
-                    🔒 Privacy & Data Controls
-                </button>
-                <div v-if="showPrivacyOptions" class="mt-2 space-y-2 text-xs">
-                    <p class="text-gray-500 dark:text-gray-400">
-                        All data is stored locally on your device. No
-                        information is sent to external servers.
-                    </p>
-                    <button
-                        @click="resetLearningData"
-                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
-                    >
-                        Reset Learning Data
-                    </button>
+        <!-- Goal Optimization -->
+        <div v-if="insights.goalOptimization && insights.goalOptimization.length > 0" class="rounded-lg bg-indigo-50 p-4 dark:bg-indigo-900">
+            <h4 class="mb-3 font-medium text-indigo-800 dark:text-indigo-200">🎯 Goal Optimization</h4>
+            <div class="space-y-2">
+                <div v-for="tip in insights.goalOptimization.slice(0, 2)" :key="tip.dhikrId" class="text-sm text-indigo-700 dark:text-indigo-300">
+                    <span class="font-medium">{{ getDhikrName(tip.dhikrId) }}:</span> {{ tip.tip }}
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- No data message -->
+    <div v-else class="mb-8 rounded-lg border-2 border-dashed border-gray-300 p-6 text-center dark:border-gray-600">
+        <div class="text-gray-500 dark:text-gray-400">
+            <p class="mb-2">🌱 Start practicing to see your learning insights!</p>
+            <p class="text-sm">Complete a few dhikr sessions to unlock personalized recommendations.</p>
+        </div>
+    </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, defineEmits } from "vue";
-import { learningService } from "@/Services/LearningService.js";
+<script setup lang="ts">
+import { learningService } from '@/Services/LearningService';
+import { onMounted, ref } from 'vue';
 
-const emit = defineEmits(["apply-goal", "apply-recommendation"]);
+interface Props {
+    dhikrList?: Array<{ id: number; transliteration: string }>;
+    currentDhikrId?: string | number;
+}
 
-const props = defineProps({
-    currentDhikrId: {
-        type: [String, Number],
-        default: null,
-    },
-    dhikrList: {
-        type: Array,
-        default: () => [],
-    },
+const props = withDefaults(defineProps<Props>(), {
+    dhikrList: () => [
+        { id: 1, transliteration: 'Subhan Allah' },
+        { id: 2, transliteration: 'Alhamdulillah' },
+        { id: 3, transliteration: 'Allahu Akbar' },
+        { id: 4, transliteration: 'La ilaha illa Allah' },
+        { id: 5, transliteration: 'Astaghfirullah' },
+        { id: 6, transliteration: 'Bismillah' },
+        { id: 7, transliteration: 'La hawla wa la quwwata illa billah' },
+        { id: 8, transliteration: "Hasbi Allahu wa ni'mal wakeel" },
+    ],
 });
 
-const insights = ref({});
-const currentRecommendation = ref(null);
-const goalSuggestion = ref(null);
+const insights = ref<PersonalizedInsights>({
+    consistency: 0,
+    bestTime: '',
+    improvement: [],
+    streakInfo: { current: 0, longest: 0 },
+    favoritesDhikr: [],
+    goalOptimization: [],
+});
 const hasEnoughData = ref(false);
-const showPrivacyOptions = ref(false);
+const goalSuggestion = ref<GoalSuggestion | null>(null);
 
-const consistencyColor = computed(() => {
-    const score = insights.value.consistency || 0;
-    if (score >= 80) return "text-green-500";
-    if (score >= 60) return "text-yellow-500";
-    if (score >= 40) return "text-orange-500";
-    return "text-red-500";
-});
-
-const consistencyBarColor = computed(() => {
-    const score = insights.value.consistency || 0;
-    if (score >= 80) return "bg-green-500";
-    if (score >= 60) return "bg-yellow-500";
-    if (score >= 40) return "bg-orange-500";
-    return "bg-red-500";
-});
-
-onMounted(() => {
-    loadInsights();
-});
-
-function loadInsights() {
+const loadInsights = () => {
     try {
         insights.value = learningService.getPersonalizedInsights();
 
-        // Check if we have enough data for meaningful insights
         const sessions = learningService.getSessions();
-        hasEnoughData.value = sessions.length >= 5;
-
-        // Get current recommendation
-        currentRecommendation.value =
-            learningService.getCurrentRecommendation();
+        hasEnoughData.value = sessions.length >= 3;
 
         // Get goal suggestion for current dhikr
         if (props.currentDhikrId) {
-            goalSuggestion.value = learningService.getSuggestedGoal(
-                props.currentDhikrId
-            );
+            goalSuggestion.value = learningService.getSuggestedGoal(props.currentDhikrId.toString());
         }
     } catch (error) {
-        console.error("Error loading insights:", error);
+        console.error('Error loading insights:', error);
         hasEnoughData.value = false;
     }
-}
+};
 
-function refreshInsights() {
-    // Regenerate recommendations
-    learningService.generateRecommendations();
-    loadInsights();
-}
-
-function applyRecommendation(recommendation) {
-    emit("apply-recommendation", recommendation);
-}
-
-function getDhikrName(dhikrId) {
-    const dhikr = props.dhikrList.find((d) => d.id == dhikrId);
+const getDhikrName = (dhikrId: string | number) => {
+    const dhikr = props.dhikrList.find((d: any) => d.id == dhikrId);
     return dhikr ? dhikr.transliteration : `Dhikr ${dhikrId}`;
-}
+};
 
-function resetLearningData() {
-    if (
-        confirm(
-            "Are you sure you want to reset all learning data? This action cannot be undone."
-        )
-    ) {
-        learningService.resetLearningData();
-        insights.value = {};
-        currentRecommendation.value = null;
-        goalSuggestion.value = null;
-        hasEnoughData.value = false;
-        showPrivacyOptions.value = false;
-    }
-}
-
-// Expose refresh method for parent components
-defineExpose({
-    refreshInsights,
-    loadInsights,
+onMounted(() => {
+    loadInsights();
 });
 </script>
