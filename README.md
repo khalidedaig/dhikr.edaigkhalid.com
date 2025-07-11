@@ -1,6 +1,6 @@
-# Digital Dhikr Application
+# Dhikr Application
 
-A modern Laravel application with Vue.js for digital dhikr (Islamic prayer counter) built using `laravel new` with Vue scaffolding.
+A modern Laravel application with Vue.js for Dhikr (Islamic prayer counter) built using `laravel new` with Vue scaffolding.
 
 ## Features
 
@@ -25,7 +25,7 @@ A modern Laravel application with Vue.js for digital dhikr (Islamic prayer count
 
 ## Quick Start
 
-The application is set up with all dependencies and has been built successfully. The Digital Dhikr features include:
+The application is set up with all dependencies and has been built successfully. The Dhikr features include:
 
 ### Pages Created:
 - **Home** (`/`) - Landing page with feature overview

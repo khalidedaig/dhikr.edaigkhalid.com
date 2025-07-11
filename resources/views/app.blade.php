@@ -20,14 +20,16 @@
         })();
     </script>
 
-    {{-- Inline style to set the HTML background color based on our theme in app.css --}}
+    {{-- Inline style to set the HTML background color to match gray-900 in dark mode --}}
     <style>
         html {
-            background-color: oklch(1 0 0);
+            background-color: rgb(249 250 251);
+            /* bg-gray-50 */
         }
 
         html.dark {
-            background-color: oklch(0.145 0 0);
+            background-color: rgb(17 24 39);
+            /* bg-gray-900 */
         }
     </style>
 

@@ -115,7 +115,7 @@
         <!-- Footer -->
         <footer class="mt-12 border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <p class="text-center text-sm text-gray-500 dark:text-gray-400">&copy; 2025 Digital Dhikr. Made with ❤️ for the Muslim community.</p>
+                <p class="text-center text-sm text-gray-500 dark:text-gray-400">&copy; 2025 Dhikr. Made with ❤️ for the Muslim community.</p>
             </div>
         </footer>
     </div>

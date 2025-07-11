@@ -4,9 +4,9 @@ applyTo: '**'
 
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
-# Digital Dhikr Application - Copilot Instructions
+# Dhikr Application - Copilot Instructions
 
-This is a Laravel application with Inertia.js and Vue 3 for creating a digital Dhikr (Islamic prayer counter) web application.
+This is a Laravel application with Inertia.js and Vue 3 for creating a Dhikr (Islamic prayer counter) web application.
 
 ## Tech Stack
 
@@ -132,7 +132,7 @@ This is a Laravel application with Inertia.js and Vue 3 for creating a digital D
 ## Component Library
 
 - **PasswordInput**: Reusable password field with toggle functionality
-- **Counter**: Digital dhikr counter with goal tracking
+- **Counter**: Dhikr counter with goal tracking
 - **Layout**: Main application layout with navigation
 - **LearningInsights**: AI-powered usage analytics and recommendations
 - **Analytics Page**: Comprehensive dashboard with visual progress tracking

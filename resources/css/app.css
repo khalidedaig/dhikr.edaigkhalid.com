@@ -163,10 +163,12 @@
 
 @layer base {
     * {
-        @apply border-border outline-ring/50;
+        border-color: hsl(var(--border));
+        outline-color: hsla(var(--ring), 0.5);
     }
     body {
-        @apply bg-background text-foreground;
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
     }
 }
 
@@ -195,15 +197,15 @@
 @keyframes pulse {
     0% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+        box-shadow: 0 0 0 0 hsla(var(--primary), 0.7);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 10px hsla(var(--primary), 0);
     }
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 0 hsla(var(--primary), 0);
     }
 }
 
@@ -211,11 +213,367 @@
     animation: pulse 1s ease-in-out 3 alternate;
 }
 
-/* Password toggle button styles */
-.password-toggle {
-    @apply transition-colors duration-200;
+/* Password input icon stability fixes */
+.password-input-container {
+    position: relative;
+    width: 100%;
 }
 
-.password-toggle:hover {
-    @apply text-emerald-600;
+.password-input-container .password-lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.password-input-container .password-toggle-button {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+}
+
+/* Ensure input field maintains consistent height */
+.password-input-field {
+    height: 40px; /* Fixed height to prevent layout shift */
+    padding-left: 40px; /* Space for lock icon */
+    padding-right: 40px; /* Space for toggle button */
+}
+
+/* Enhanced Authentication Page Styles */
+
+/* Smooth focus transitions for form inputs */
+.auth-input-focus {
+    transition: all 0.2s ease-in-out;
+}
+
+.auth-input-focus:focus {
+    transform: scale(1.02);
+    box-shadow: 0 10px 15px -3px hsla(var(--foreground), 0.1);
+}
+
+/* Dark mode focus enhancements */
+.dark .auth-input-focus:focus {
+    box-shadow:
+        0 10px 15px -3px hsla(var(--foreground), 0.3),
+        0 0 0 1px hsl(var(--ring));
+}
+
+/* Enhanced password strength indicator */
+.password-strength-bar {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Authentication form animations */
+@keyframes auth-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes auth-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.auth-form {
+    animation: auth-slide-up 0.6s ease-out;
+}
+
+.auth-card {
+    animation: auth-fade-in 0.8s ease-out;
+}
+
+/* Enhanced loading states */
+.auth-button-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-button-loading::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, hsla(var(--foreground), 0.2), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+/* Dark mode loading shimmer */
+.dark .auth-button-loading::before {
+    background: linear-gradient(to right, transparent, hsla(var(--foreground), 0.1), transparent);
+}
+
+@keyframes loading-shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}
+
+/* Custom shake animation */
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-4px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+/* Status message animations */
+.auth-status-success {
+    animation: auth-slide-up 0.5s ease-out;
+}
+
+.auth-status-error {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Enhanced hover effects for auth links */
+.auth-link {
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.auth-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.2s ease;
+}
+
+.auth-link:hover::after {
+    width: 100%;
+}
+
+/* Icon container enhancements */
+.auth-icon-container {
+    transition: transform 0.2s ease-in-out;
+}
+
+.auth-icon-container:hover {
+    transform: scale(1.1);
+}
+
+/* Form field containers */
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Enhanced focus visible styles */
+.auth-focus-visible:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px hsl(var(--ring));
+}
+
+/* Password strength levels using theme chart colors */
+.strength-weak {
+    background-color: hsl(var(--destructive));
+}
+
+.strength-fair {
+    background-color: hsl(var(--chart-5)); /* Orange color from theme */
+}
+
+.strength-good {
+    background-color: hsl(var(--chart-4)); /* Yellow color from theme */
+}
+
+.strength-strong {
+    background-color: hsl(var(--chart-2)); /* Green color from theme */
+}
+
+/* Dark mode password strength levels - using same theme colors for consistency */
+.dark .strength-weak {
+    background-color: hsl(var(--destructive));
+}
+
+.dark .strength-fair {
+    background-color: hsl(var(--chart-5));
+}
+
+.dark .strength-good {
+    background-color: hsl(var(--chart-4));
+}
+
+.dark .strength-strong {
+    background-color: hsl(var(--chart-2));
+}
+
+/* Enhanced dark mode gradient backgrounds */
+.dark .auth-card-background {
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+}
+
+/* Dark mode enhanced shadow for authentication cards */
+.dark .auth-card-shadow {
+    box-shadow:
+        0 20px 25px -5px hsla(var(--background), 0.4),
+        0 10px 10px -5px hsla(var(--background), 0.2),
+        0 0 0 1px hsl(var(--border));
+}
+
+/* Dark mode decorative elements */
+.dark .auth-decorative-gradient::before {
+    background: linear-gradient(135deg, hsla(var(--primary), 0.03) 0%, transparent 50%);
+}
+
+.dark .auth-decorative-gradient::after {
+    background: linear-gradient(225deg, hsla(var(--secondary), 0.03) 0%, transparent 50%);
+}
+
+/* Dark mode background gradient enhancements for auth layout */
+.dark .auth-layout-background {
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--background)) 40%, hsl(var(--muted)) 100%);
+}
+
+/* Dark mode decorative blur elements */
+.dark .auth-decorative-blur-primary {
+    background: hsla(var(--primary), 0.08) !important;
+}
+
+.dark .auth-decorative-blur-secondary {
+    background: hsla(var(--secondary), 0.08) !important;
+}
+
+/* Enhanced shadow for dark mode cards */
+.dark .auth-card {
+    box-shadow:
+        0 25px 50px -12px hsla(var(--background), 0.6),
+        0 0 0 1px hsl(var(--border)),
+        inset 0 1px 0 0 hsla(var(--foreground), 0.05);
+}
+
+/* Dark mode logo glow effect */
+.dark .auth-logo-glow {
+    box-shadow:
+        0 0 20px hsla(var(--primary), 0.3),
+        0 0 40px hsla(var(--primary), 0.1);
+}
+
+/* Dark mode input field enhancements */
+.dark input:focus-visible {
+    box-shadow:
+        0 0 0 2px hsl(var(--ring)),
+        0 4px 6px -1px hsla(var(--background), 0.3);
+}
+
+/* Dark mode button enhancements */
+.dark button:hover {
+    box-shadow:
+        0 4px 14px 0 hsla(var(--primary), 0.2),
+        0 0 0 1px hsl(var(--border));
+}
+
+/* Responsive enhancements */
+@media (max-width: 640px) {
+    .auth-container {
+        padding: 1rem;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+    }
+}
+
+/* Dark mode specific enhancements */
+@media (prefers-color-scheme: dark) {
+    .auth-glow {
+        box-shadow:
+            0 25px 50px -12px hsla(var(--background), 0.25),
+            0 0 0 1px hsla(var(--primary), 0.1);
+    }
+}
+
+/* Dark mode class-based enhancements */
+.dark {
+    /* Enhanced text contrast */
+    --muted-foreground: hsl(0 0% 70%); /* Increased from 63.9% for better readability */
+}
+
+/* Dark mode specific component styles */
+.dark .auth-link {
+    color: hsl(var(--foreground));
+}
+
+.dark .auth-link:hover {
+    color: hsl(var(--primary));
+}
+
+/* Dark mode icon enhancements */
+.dark .auth-icon-container {
+    color: hsl(var(--muted-foreground));
+}
+
+.dark .auth-icon-container:hover {
+    color: hsl(var(--foreground));
+}
+
+/* Dark mode form field styling */
+.dark input:disabled,
+.dark input[readonly] {
+    background-color: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    opacity: 0.7;
+}
+
+/* Dark mode status message styling */
+.dark .auth-status-success {
+    background-color: hsla(var(--chart-2), 0.15);
+    border-color: hsla(var(--chart-2), 0.25);
+    color: hsl(var(--chart-2));
+}
+
+.dark .auth-status-error {
+    background-color: hsla(var(--destructive), 0.15);
+    border-color: hsla(var(--destructive), 0.25);
+    color: hsl(var(--destructive));
+}
+
+/* Accessibility enhancements */
+@media (prefers-reduced-motion: reduce) {
+    .auth-form,
+    .auth-card,
+    .auth-icon-container {
+        animation: none;
+    }
+
+    .auth-input-focus,
+    .password-strength-bar,
+    .auth-link,
+    .auth-icon-container {
+        transition: none;
+    }
 }

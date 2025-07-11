@@ -9,22 +9,41 @@ defineProps<{
 </script>
 
 <template>
-    <div class="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
-        <div class="w-full max-w-sm">
-            <div class="flex flex-col gap-8">
-                <div class="flex flex-col items-center gap-4">
-                    <Link :href="route('home')" class="flex flex-col items-center gap-2 font-medium">
-                        <div class="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                            <AppLogoIcon class="size-9 fill-current text-[var(--foreground)] dark:text-white" />
+    <div class="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-background via-background/95 to-muted/20 p-4 md:p-8">
+        <!-- Background decorative elements -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl"></div>
+            <div class="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-secondary/5 blur-3xl"></div>
+        </div>
+
+        <div class="relative w-full max-w-md">
+            <div class="space-y-8 rounded-2xl border border-border bg-card p-8 shadow-xl shadow-black/5">
+                <!-- Logo and branding -->
+                <div class="space-y-4 text-center">
+                    <Link :href="route('home')" class="group inline-flex flex-col items-center gap-3 transition-all duration-200 hover:scale-105">
+                        <div class="relative">
+                            <!-- Glowing background effect -->
+                            <div class="absolute inset-0 scale-110 rounded-2xl bg-primary/20 blur-lg"></div>
+                            <AppLogoIcon class="h-8 w-8 text-primary" />
                         </div>
-                        <span class="sr-only">{{ title }}</span>
+                        <span class="text-lg font-semibold text-foreground transition-colors group-hover:text-primary"> Dhikr </span>
                     </Link>
-                    <div class="space-y-2 text-center">
-                        <h1 class="text-xl font-medium">{{ title }}</h1>
-                        <p class="text-center text-sm text-muted-foreground">{{ description }}</p>
+
+                    <div class="space-y-2">
+                        <h1 class="text-2xl font-bold text-foreground">{{ title }}</h1>
+                        <p class="text-sm leading-relaxed text-muted-foreground">{{ description }}</p>
                     </div>
                 </div>
-                <slot />
+
+                <!-- Main content -->
+                <div class="space-y-6">
+                    <slot />
+                </div>
+            </div>
+
+            <!-- Footer note -->
+            <div class="mt-8 text-center">
+                <p class="text-xs text-muted-foreground">Secure authentication powered by Laravel</p>
             </div>
         </div>
     </div>
