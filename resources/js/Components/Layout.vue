@@ -47,22 +47,54 @@
                         </button>
 
                         <!-- Authentication Links -->
-                        <div v-if="$page.props.auth.user" class="flex items-center space-x-4">
-                            <span class="text-sm text-gray-700 dark:text-gray-300"> Welcome, {{ $page.props.auth.user.name }} </span>
-                            <Link
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                                class="text-sm text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                            >
-                                Logout
-                            </Link>
+                        <div v-if="$page.props.auth.user">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger as-child>
+                                    <button
+                                        class="flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    >
+                                        <UserInfo :user="$page.props.auth.user" />
+                                        <ChevronDown :size="16" class="transition-transform duration-200" />
+                                    </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" class="w-56">
+                                    <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                                        <UserInfo :user="$page.props.auth.user" :show-email="true" />
+                                    </div>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem as-child>
+                                        <Link class="block w-full" :href="route('profile.edit')">
+                                            <User class="mr-2 h-4 w-4" />
+                                            Profile
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem as-child>
+                                        <Link class="block w-full" :href="route('appearance')">
+                                            <Settings class="mr-2 h-4 w-4" />
+                                            Settings
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem as-child>
+                                        <Link class="block w-full" method="post" :href="route('logout')" as="button">
+                                            <LogOut class="mr-2 h-4 w-4" />
+                                            Log out
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
-                        <div v-else class="flex items-center space-x-4">
-                            <Link :href="route('login')" class="text-sm text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                        <div v-else class="flex items-center space-x-3">
+                            <Link
+                                :href="route('login')"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                            >
                                 Login
                             </Link>
-                            <Link :href="route('register')" class="rounded-md bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600">
+                            <Link
+                                :href="route('register')"
+                                class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+                            >
                                 Register
                             </Link>
                         </div>
@@ -100,6 +132,49 @@
                         >
                             📊 Analytics
                         </Link>
+
+                        <!-- Mobile Authentication Section -->
+                        <div class="border-t border-gray-200 pt-2 dark:border-gray-700">
+                            <div v-if="$page.props.auth.user" class="space-y-1">
+                                <div class="flex items-center px-3 py-2">
+                                    <UserInfo :user="$page.props.auth.user" :show-email="true" />
+                                </div>
+                                <Link
+                                    :href="route('profile.edit')"
+                                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                                >
+                                    Profile
+                                </Link>
+                                <Link
+                                    :href="route('appearance')"
+                                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                                >
+                                    Settings
+                                </Link>
+                                <Link
+                                    :href="route('logout')"
+                                    method="post"
+                                    as="button"
+                                    class="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                                >
+                                    Logout
+                                </Link>
+                            </div>
+                            <div v-else class="space-y-1">
+                                <Link
+                                    :href="route('login')"
+                                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    :href="route('register')"
+                                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -121,9 +196,11 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu';
+import UserInfo from '@/components/UserInfo.vue';
 import { Link } from '@inertiajs/vue3';
-import { Menu, Moon, Sun } from 'lucide-vue-next';
+import { ChevronDown, LogOut, Menu, Moon, Settings, Sun, User } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
 
 const mobileMenuOpen = ref(false);

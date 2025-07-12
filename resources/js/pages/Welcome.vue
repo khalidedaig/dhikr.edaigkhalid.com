@@ -12,10 +12,10 @@ import { Head, Link } from '@inertiajs/vue3';
             <nav class="flex items-center justify-end gap-4">
                 <Link
                     v-if="$page.props.auth.user"
-                    :href="route('dashboard')"
+                    :href="route('home')"
                     class="inline-block rounded-sm border border-gray-200 px-5 py-1.5 text-sm leading-normal text-gray-900 hover:border-gray-300 dark:border-gray-700 dark:text-gray-100 dark:hover:border-gray-600"
                 >
-                    Dashboard
+                    Home
                 </Link>
                 <template v-else>
                     <Link
